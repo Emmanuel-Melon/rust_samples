@@ -3,5 +3,6 @@ table! {
         userid -> Int4,
         username -> Varchar,
         email -> Varchar,
+        active -> Bool,
     }
 }
