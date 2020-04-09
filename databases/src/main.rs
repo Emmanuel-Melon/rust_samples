@@ -12,6 +12,10 @@ use std::env;
 // diesel
 use diesel::{mysql::MysqlConnection, pg::PgConnection, prelude::*};
 
+#![feature(proc_macro_hygiene, decl_macro)]
+
+#[macro_use] extern crate rocket;
+
 // connect to PostgreSQL
 fn connect_pg() -> PgConnection {
     dotenv().ok();
@@ -36,6 +40,13 @@ struct User {
     pub emaily: String,
 }
 
+// api
+#[get("/")]
+fn index() -> &'static str {
+    "Hello, Rocket!"
+}
+
+
 fn main() {
     // bring dsl into scope
 
@@ -52,4 +63,7 @@ fn main() {
         println!("----------\n");
         println!("{}", user.email);
     }
+
+    // init API
+    rocket::ignite().mount("/", routes![index]).launch();
 }
